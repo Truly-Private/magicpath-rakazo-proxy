@@ -1,0 +1,17 @@
+services:
+  proxy:
+    build: .
+    ports:
+      - "127.0.0.1:3100:3100"
+    env_file: .env
+    environment:
+      HOST: 0.0.0.0
+      TOKEN_STATE_FILE: /app/state/tokens.enc.json
+    volumes:
+      - tokens:/app/state
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    restart: unless-stopped
+volumes:
+  tokens:
